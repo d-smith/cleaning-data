@@ -40,6 +40,27 @@ ReadFeatures <- function() {
   features
 }
 
+## Int2Label returns a readable activity label based on the numeric encoding of
+## the label. The lables and the integer value to readable label mapping is
+## taken from the activity_labels.txt from the dataset.
+Int2Label <- function(v) {
+  label <- "unknown"
+  if(v == 1) {
+    label <- "WALKING"
+  } else if(v == 2) {
+    label <- "WALKING_UPSTAIRS"
+  } else if(v == 3) {
+    label <- "WALKING_DOWNSTAIRS"
+  } else if(v == 4) {
+    label <- "SITTING"
+  } else if(v == 5) {
+    label <- "STANDING"
+  } else if(v == 6) {
+    label <- "LAYING"
+  }
+  label
+}
+
 ## CombineTrainingAndTestSets combines the training and test sets, and names the
 ## variables using the features and subject_id and label
 CombineTrainingAndTestSets <- function() {
@@ -52,7 +73,53 @@ CombineTrainingAndTestSets <- function() {
   features <- ReadFeatures()
   varNames <- c("subject-id", "label",as.vector(features[,2]))
   
-  # Name the variabled and return the data set
+  # Name the variables
   names(combined) <- varNames
+  
+  # Improve the activity labels
+  combined$label <- sapply(combined$label, Int2Label)
+  
+  # Subset the features of interest
+  combined <- SelectFeaturesOfInterest(varNames,combined)
+  
   combined
 }
+
+
+## IsFeatureOfInterest is a predicate that returns true if the feature name
+## is one we want in our tidy data set
+IsFeatureOfInterest <- function(featureName) {
+  ofInterest <- FALSE
+  if(grepl("mean",featureName)) {
+    ofInterest <- TRUE
+  } else if(grepl("std", featureName)) {
+    ofInterest <- TRUE
+  } else if(featureName == "subject-id") {
+    ofInterest <- TRUE
+  } else if(featureName == "label") {
+    ofInterest <- TRUE
+  }
+  ofInterest
+}
+
+## SelectFeaturesOfInterest selects the features of interested
+## from the combined dataset
+SelectFeaturesOfInterest <- function(featureNames, combined) {
+  # Make a data frame from the feature names
+  featuresOfInterest <- data.frame("feature"=featureNames,"ofInterest"=TRUE)
+  
+  # Set the of interest column values by applying IsFeatureOfInterest
+  featuresOfInterest$ofInterest <- sapply(featuresOfInterest$feature,IsFeatureOfInterest)
+  
+  # Subset just the feature names we want
+  dsFeatures <- subset(featuresOfInterest,ofInterest==TRUE,select=c("feature"))
+  
+  # Convert dsFeatures to vector so we can use it to subset the dataset
+  dsFeatures <- as.vector(dsFeatures[,1])
+  
+  # Extrac the features we want
+  combined <- subset(combined,select=dsFeatures)
+  
+  combined
+}
+
