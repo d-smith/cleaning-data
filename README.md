@@ -26,14 +26,14 @@ View(summarized)
 The script performs the following processing:
 
 1. The existence of the dataset directory and training and test
-subdirectories is verified.
+subdirectories are verified.
 2. The dplyr library is loaded
 3. The sensor data, activity labels, and subject id files are loaded
 and combined into a single data frame for both the training data and the test data.
 4. The test and training data frames are then combined into a single
-data frame, and are then labeled with the subject id, the activity
+data frame and labeled with the subject id, the activity
 label, and the features provided in features.txt with the dataset.
-5. The features of interest for the project, those given mean and
+5. The features of interest for the project, those giving mean and
 standard deviations for sensor measurements, are extracted from the data set (along with the subject id and activity label)
 6. The data is then summarized using the dplyr group_by and
 summarise_each functions.
@@ -51,7 +51,9 @@ The feature names defined in the original project has been used as labels for th
 labels are taken directly from the original code book, prepended
 with "average" to make it clear in the tidy data set that average
 values for the features are being presented in the summarized data.
+Subject ids and activity labels were pulled from separate files and
+combined with the feature data.
 
-Note activity values themselves (WALKING, STANDING, etc) were obtained
+Note the activity values (WALKING, STANDING, etc) were obtained
 using the mapping from the original codes in the raw dataset to
 descriptive values provided in the activity_labels.txt file
