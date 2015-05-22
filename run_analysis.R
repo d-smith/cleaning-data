@@ -8,7 +8,7 @@ CheckDatafiles <- function() {
   if(!file.exists("UCI\ HAR\ Dataset/test")) {
     stop("test subdirectory not found")
   }
-  if(!file.exists("UCI\ HAR\ Dataset/trainw")) {
+  if(!file.exists("UCI\ HAR\ Dataset/train")) {
     stop("train subdirectory not found")
   }
 }
@@ -123,3 +123,36 @@ SelectFeaturesOfInterest <- function(featureNames, combined) {
   combined
 }
 
+## ProduceSummarizedData returns a data set with the average of each
+## variable for each activity and subject
+ProduceSummarizedData <- function(dataset) {
+  summarized <- dataset %>% group_by(d$"subject-id",label) %>% summarise_each(funs(mean),matches("mean|std"))
+  summarized
+}
+
+## LabelSummarizedData returns the summarized data sets with descriptive labels
+LabelSummarizedData <- function(ds) {
+  labels <- names(ds)
+  labels[1] <- "subject"
+  labels[2] <- "activity"
+  for(i in 3:length(ds)) {
+    labels[i] <- paste("average", labels[i], sep=" ")
+  }
+  
+  names(ds) <- labels
+  ds
+}
+
+run_analysis <- function() {
+  # Check basic data file setup
+  CheckDatafiles()
+  
+  # Load plyr
+  library("dplyr")
+  
+  combined <- CombineTrainingAndTestSets()
+  
+  summarized <- ProduceSummarizedData(combined)
+  summarized <- LabelSummarizedData(summarized)
+  summarized
+}
