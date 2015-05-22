@@ -18,7 +18,7 @@ The dataset may be downloaded from [here](https://d396qusza40orc.cloudfront.net/
 
 ## R Script
 
-The run_analsis.R script produces a tidy data set consisting of average of each
+The run_analysis.R script produces a tidy data set consisting of the average of each
 mean and standard deviation observation from the original dataset.
 
 To run the script, source it into R Studio, set the working directory relative to the data set as described above, then invoke it as `run_analysis`, for example
