@@ -4,7 +4,12 @@ This repo contains code related to the class project for Getting and
 Cleaning data.
 
 The R script assumes the data set for the project has been downloaded and
-unzipped in the working directory the script executes in. The script
+unzipped in the working directory the script executes in. In other
+words, to run the script, clone the repository from github, then
+download and unzip the dataset into the directory containing the
+cloned project (which will contain the run_analysis.R script).
+
+The script
 also assumes the dplyr package has been installed in the R environment: the script loads the dplyr library but does not install the dplyr
 package.
 
