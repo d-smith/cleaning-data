@@ -1,3 +1,23 @@
+## run_analysis - implementation of the class project project for the 
+## Coursera Getting and Cleaning Data course.
+run_analysis <- function() {
+  # Check basic data file setup
+  CheckDatafiles()
+  
+  # Load plyr
+  library("dplyr")
+  
+  # Combine the test and training sets, labeling the variables using the features
+  # provided with the dataset, extracting the features of interest to the project.
+  combined <- CombineTrainingAndTestSets()
+  
+  # Summarize the data, and label the summarized data
+  summarized <- ProduceSummarizedData(combined)
+  summarized <- LabelSummarizedData(summarized)
+  
+  summarized
+}
+
 ## CheckDataFiles does a quick sanity check on the assumptions made by
 ## the program about the location of the data files relative to the script
 ## location.
@@ -143,16 +163,4 @@ LabelSummarizedData <- function(ds) {
   ds
 }
 
-run_analysis <- function() {
-  # Check basic data file setup
-  CheckDatafiles()
-  
-  # Load plyr
-  library("dplyr")
-  
-  combined <- CombineTrainingAndTestSets()
-  
-  summarized <- ProduceSummarizedData(combined)
-  summarized <- LabelSummarizedData(summarized)
-  summarized
-}
+
