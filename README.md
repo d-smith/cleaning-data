@@ -16,6 +16,9 @@ package.
 The dataset may be downloaded from [here](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip), and is described
 [here](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
 
+The tidy data set produced by this project is based on the above
+referenced data set, downloaded on May 19th, 2015.
+
 ## R Script
 
 The run_analysis.R script produces a tidy data set consisting of the average of each
@@ -47,9 +50,10 @@ indicate they represent average sensore readings.
 
 ## Code Book
 
-The <a href="features_info.txt">Code Book</a> distributed with the
+The <a href="codebook.txt">Code Book</a> distributed with the
 data set provides a comprehensive description of the features in the
-data set processed by the R script in this project.
+data set processed by the R script in this project. This repo contains
+the original codebook supplemented for the tidy data set.
 
 The feature names defined in the original project has been used as labels for the data in this project. Note that the subject ids are labeled
 "subject" and the activities are labeled "activity" -- all other
